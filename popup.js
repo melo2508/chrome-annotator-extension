@@ -7,13 +7,17 @@ document.getElementById('highlight').addEventListener('click', () => {
     chrome.storage.local.get('annotations', (result) => {
         const annotationsList = document.getElementById('annotationsList');
 
-    // Ensure result.annotations is an array
-    const annotations = result.annotations || [];
-        annotations.forEach(annotation => {
-            const div = document.createElement('div');
-        div.textContent = annotation.text;
-        annotationsList.appendChild(div);
-    });
+        if (result && result.annotations && Array.isArray(result.annotations)) {
+            const annotations = result.annotations;
+            
+            annotations.forEach(annotation => {
+              const div = document.createElement('div');
+              div.textContent = annotation.text;
+              annotationsList.appendChild(div);
+            });
+          } else {
+            console.error('Annotations not found or not an array:', result);
+          }
   });
   
   });
