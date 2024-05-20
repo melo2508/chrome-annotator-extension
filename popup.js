@@ -6,7 +6,10 @@ document.getElementById('highlight').addEventListener('click', () => {
     // Load annotations
     chrome.storage.local.get('annotations', (result) => {
         const annotationsList = document.getElementById('annotationsList');
-        result.annotations.forEach(annotation => {
+
+    // Ensure result.annotations is an array
+    const annotations = result.annotations || [];
+        annotations.forEach(annotation => {
             const div = document.createElement('div');
         div.textContent = annotation.text;
         annotationsList.appendChild(div);
